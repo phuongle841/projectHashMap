@@ -8,6 +8,7 @@ class hashMap {
     this.loadFactor = 0.75;
     this.Buckets = [];
   }
+
   hash(key) {
     let hashCode = 0;
     const primeNumber = 33;
@@ -16,6 +17,7 @@ class hashMap {
     }
     return hashCode;
   }
+
   display() {
     for (let i = 0; i < this.Buckets.length; i++) {
       const element = this.Buckets[i];
@@ -24,6 +26,7 @@ class hashMap {
       }
     }
   }
+
   set(key, value) {
     this.checkLoadFactor();
     let position = this.hash(key);
@@ -37,6 +40,7 @@ class hashMap {
     }
     this.Buckets[position].append(key, value);
   }
+
   get(key) {
     let position = this.hash(key);
     if (this.Buckets[position] == undefined) {
@@ -47,6 +51,7 @@ class hashMap {
       return current.value;
     }
   }
+
   has(key) {
     let position = this.hash(key);
     if (this.Buckets[position] == undefined) {
@@ -57,6 +62,7 @@ class hashMap {
     }
     return false;
   }
+
   remove(key) {
     let position = this.hash(key);
     if (this.Buckets[position] == undefined) {
@@ -69,6 +75,7 @@ class hashMap {
       }
     }
   }
+
   length() {
     let counter = 0;
     for (let i = 0; i < this.capacity; i++) {
@@ -78,11 +85,13 @@ class hashMap {
     }
     return counter;
   }
+
   clear() {
     for (let i = 0; i < this.capacity; i++) {
       this.Buckets[i] = null;
     }
   }
+
   keys() {
     let result = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -93,6 +102,7 @@ class hashMap {
     }
     return result;
   }
+
   values() {
     let result = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -103,6 +113,7 @@ class hashMap {
     }
     return result;
   }
+
   entries() {
     let result = [];
     for (let i = 0; i < this.capacity; i++) {
@@ -113,14 +124,30 @@ class hashMap {
     }
     return result;
   }
+
   checkLoadFactor() {
     let ration = this.length() / this.capacity;
     if (ration > this.loadFactor) {
+      console.log(ration);
       this.upgradeCapacity();
     }
   }
+
   upgradeCapacity() {
-    console.log(this.entries());
+    this.capacity = this.capacity * 2;
+    let oldData = this.entries();
+    let newData = [];
+    oldData.map((values) => {
+      values.map((value) => {
+        newData.push(value);
+      });
+    });
+    this.clear();
+    newData.forEach((value) => {
+      this.set(value[0], value[1]);
+    });
   }
+
+  recursiveFunction(entries) {}
 }
 module.exports.hashMap = hashMap;
